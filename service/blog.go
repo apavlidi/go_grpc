@@ -7,24 +7,24 @@ import (
 	"time"
 )
 
-var blogs []*proto.Blog
+var Blogs []*proto.Blog
 
 func ListBlogs() ([]*proto.Blog, error) {
-	return blogs, nil
+	return Blogs, nil
 }
 
 func CreateBlog(title string, text string, author *proto.User) (int, error) {
 	id := IdGenerator()
 	currentDate := time.Now().Local()
 
-	foundUser := slices.IndexFunc(users, func(b *proto.User) bool {
+	foundUser := slices.IndexFunc(Users, func(b *proto.User) bool {
 		return b.Name == author.Name
 	})
 	if foundUser == -1 {
 		return -1, errors.New("user not found")
 	}
 
-	blogs = append(blogs, &proto.Blog{
+	Blogs = append(Blogs, &proto.Blog{
 		Id:     int32(id),
 		Title:  title,
 		Text:   text,
@@ -36,7 +36,7 @@ func CreateBlog(title string, text string, author *proto.User) (int, error) {
 }
 
 func DeleteBlog(id int32) {
-	foundIndex := slices.IndexFunc(blogs, func(b *proto.Blog) bool {
+	foundIndex := slices.IndexFunc(Blogs, func(b *proto.Blog) bool {
 		return b.Id == id
 	})
 
@@ -44,11 +44,11 @@ func DeleteBlog(id int32) {
 		return
 	}
 
-	blogs = append(blogs[:foundIndex], blogs[foundIndex+1:]...)
+	Blogs = append(Blogs[:foundIndex], Blogs[foundIndex+1:]...)
 }
 
 func GetBlog(id int32) *proto.Blog {
-	foundIndex := slices.IndexFunc(blogs, func(b *proto.Blog) bool {
+	foundIndex := slices.IndexFunc(Blogs, func(b *proto.Blog) bool {
 		return b.Id == id
 	})
 
@@ -56,7 +56,7 @@ func GetBlog(id int32) *proto.Blog {
 		return nil
 	}
 
-	return blogs[foundIndex]
+	return Blogs[foundIndex]
 }
 
 func UpdateBlog(req *proto.UpdateBlogRequest) {

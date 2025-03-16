@@ -4,16 +4,16 @@ import (
 	"go-grpc/proto"
 )
 
-var users = []*proto.User{}
+var Users = []*proto.User{}
 
 func ListUsers() []*proto.User {
-	return users
+	return Users
 }
 
 func CreateUser(name string) int {
 	id := IdGenerator()
 
-	users = append(users, &proto.User{
+	Users = append(Users, &proto.User{
 		Id:   int32(id),
 		Name: name,
 	})
