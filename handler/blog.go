@@ -9,37 +9,37 @@ import (
 	"log"
 )
 
-type BlogServer struct {
+type BlogHandler struct {
 	proto.UnimplementedBlogServiceServer
 }
 
-func (s BlogServer) ListBlogs(_ context.Context, _ *proto.ListBlogRequest) (*proto.ListBlogResponse, error) {
-	blogs, err := service.List()
+func (s BlogHandler) ListBlogs(_ context.Context, _ *proto.ListBlogsRequest) (*proto.ListBlogsResponse, error) {
+	blogs, err := service.ListBlogs()
 	if err != nil {
 		log.Fatalf("cannot get blogs %s", err)
 	}
-	return &proto.ListBlogResponse{Blogs: blogs}, nil
+	return &proto.ListBlogsResponse{Blogs: blogs}, nil
 }
 
-func (s BlogServer) CreateBlog(_ context.Context, req *proto.CreateBlogRequest) (*proto.CreateBlogResponse, error) {
+func (s BlogHandler) CreateBlog(_ context.Context, req *proto.CreateBlogRequest) (*proto.CreateBlogResponse, error) {
 	if req.Title == "" || req.Text == "" || req.Author == "" {
 		return nil, status.New(codes.InvalidArgument, "invalid request").Err()
 	}
-	newBlogId := service.Create(req.Title, req.Text, req.Author)
+	newBlogId := service.CreateBlog(req.Title, req.Text, req.Author)
 	return &proto.CreateBlogResponse{Id: int32(newBlogId)}, nil
 }
 
-func (s BlogServer) DeleteBlog(_ context.Context, req *proto.DeleteBlogRequest) (*proto.DeleteBlogResponse, error) {
-	service.Delete(req.Id)
+func (s BlogHandler) DeleteBlog(_ context.Context, req *proto.DeleteBlogRequest) (*proto.DeleteBlogResponse, error) {
+	service.DeleteBlog(req.Id)
 	return &proto.DeleteBlogResponse{}, nil
 }
 
-func (s BlogServer) GetBlog(_ context.Context, req *proto.GetBlogRequest) (*proto.GetBlogResponse, error) {
-	blog := service.Get(req.Id)
+func (s BlogHandler) GetBlog(_ context.Context, req *proto.GetBlogRequest) (*proto.GetBlogResponse, error) {
+	blog := service.GetBlog(req.Id)
 	return &proto.GetBlogResponse{Blog: blog}, nil
 }
 
-func (s BlogServer) UpdateBlog(_ context.Context, req *proto.UpdateBlogRequest) (*proto.UpdateBlogResponse, error) {
-	service.Update(req)
+func (s BlogHandler) UpdateBlog(_ context.Context, req *proto.UpdateBlogRequest) (*proto.UpdateBlogResponse, error) {
+	service.UpdateBlog(req)
 	return &proto.UpdateBlogResponse{}, nil
 }

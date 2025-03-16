@@ -16,11 +16,11 @@ var blogs = []*proto.Blog{
 	},
 }
 
-func List() ([]*proto.Blog, error) {
+func ListBlogs() ([]*proto.Blog, error) {
 	return blogs, nil
 }
 
-func Create(title string, text string, author string) int {
+func CreateBlog(title string, text string, author string) int {
 	id := IdGenerator()
 	currentDate := time.Now().Local()
 
@@ -35,7 +35,7 @@ func Create(title string, text string, author string) int {
 	return id
 }
 
-func Delete(id int32) {
+func DeleteBlog(id int32) {
 	foundIndex := slices.IndexFunc(blogs, func(b *proto.Blog) bool {
 		return b.Id == id
 	})
@@ -47,7 +47,7 @@ func Delete(id int32) {
 	blogs = append(blogs[:foundIndex], blogs[foundIndex+1:]...)
 }
 
-func Get(id int32) *proto.Blog {
+func GetBlog(id int32) *proto.Blog {
 	foundIndex := slices.IndexFunc(blogs, func(b *proto.Blog) bool {
 		return b.Id == id
 	})
@@ -59,8 +59,8 @@ func Get(id int32) *proto.Blog {
 	return blogs[foundIndex]
 }
 
-func Update(req *proto.UpdateBlogRequest) {
-	blog := Get(req.Id)
+func UpdateBlog(req *proto.UpdateBlogRequest) {
+	blog := GetBlog(req.Id)
 
 	if blog != nil {
 		blog.Title = req.Title

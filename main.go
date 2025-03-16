@@ -15,8 +15,10 @@ func main() {
 	}
 
 	server := grpc.NewServer()
-	service := &handler.BlogServer{}
-	proto.RegisterBlogServiceServer(server, service)
+	blogHandler := &handler.BlogHandler{}
+	userHandler := &handler.UserHandler{}
+	proto.RegisterBlogServiceServer(server, blogHandler)
+	proto.RegisterUserServiceServer(server, userHandler)
 	err = server.Serve(list)
 	if err != nil {
 		log.Fatalf("cannot serve requests: %s", err)

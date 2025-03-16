@@ -2,17 +2,22 @@ syntax = "proto3";
 option go_package = "github.com/apavlidi/go-grpc/proto";
 
 service BlogService {
-  rpc ListBlogs(ListBlogRequest) returns (ListBlogResponse);
+  rpc ListBlogs(ListBlogsRequest) returns (ListBlogsResponse);
   rpc CreateBlog(CreateBlogRequest) returns (CreateBlogResponse);
   rpc DeleteBlog(DeleteBlogRequest) returns (DeleteBlogResponse);
   rpc UpdateBlog(UpdateBlogRequest) returns (UpdateBlogResponse);
   rpc GetBlog(GetBlogRequest) returns (GetBlogResponse);
 }
 
-message ListBlogRequest{
+service UserService {
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
 }
 
-message ListBlogResponse{
+message ListBlogsRequest{
+}
+
+message ListBlogsResponse{
   repeated Blog blogs = 1;
 }
 
@@ -57,4 +62,23 @@ message GetBlogRequest{
 
 message GetBlogResponse{
   Blog blog = 1;
+}
+
+message User {
+  int32 id = 1;
+  string name = 2;
+}
+
+message ListUsersRequest{
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+}
+
+message CreateUserRequest {
+  string name = 1;
+}
+
+message CreateUserResponse {
 }
