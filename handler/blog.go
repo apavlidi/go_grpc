@@ -28,3 +28,8 @@ func (s BlogServer) CreateBlog(_ context.Context, req *proto.CreateBlogRequest) 
 	newBlogId := service.Create(req.Title, req.Text, req.Author)
 	return &proto.CreateBlogResponse{Id: int32(newBlogId)}, nil
 }
+
+func (s BlogServer) DeleteBlog(_ context.Context, req *proto.DeleteBlogRequest) (*proto.DeleteBlogResponse, error) {
+	service.Delete(req.Id)
+	return &proto.DeleteBlogResponse{}, nil
+}
