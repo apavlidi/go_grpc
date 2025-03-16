@@ -7,15 +7,7 @@ import (
 	"time"
 )
 
-var blogs = []*proto.Blog{
-	{
-		Id:     1,
-		Title:  "First Blog Post",
-		Text:   "This is the content of the first blog post.",
-		Author: nil,
-		Date:   "2023-11-01",
-	},
-}
+var blogs []*proto.Blog
 
 func ListBlogs() ([]*proto.Blog, error) {
 	return blogs, nil
