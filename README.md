@@ -9,8 +9,11 @@ protoc \
 ./proto/blogengine.proto
 ```
 
+### Run tests
+`go test ./...`
+
 ### Run server
-```go run main.go```
+`go run main.go`
 
 ### Client
 Postman has a service discovery
