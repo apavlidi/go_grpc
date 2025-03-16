@@ -11,3 +11,6 @@ protoc \
 
 ### Run server
 ```go run main.go```
+
+### Client
+Postman has a service discovery
