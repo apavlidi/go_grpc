@@ -25,14 +25,14 @@ message Blog {
   int32 id = 1;
   string title = 2;
   string text = 3;
-  string author = 4;
+  User author = 4;
   string date = 5;
 }
 
 message CreateBlogRequest {
   string title = 1;
   string text = 2;
-  string author = 3;
+  User author = 3;
 }
 
 message CreateBlogResponse {
@@ -50,7 +50,7 @@ message UpdateBlogRequest{
   int32 id = 1;
   string title = 2;
   string text = 3;
-  string author = 4;
+  User author = 4;
 }
 
 message UpdateBlogResponse{

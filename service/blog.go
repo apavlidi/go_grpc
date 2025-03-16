@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"go-grpc/proto"
 	"slices"
 	"time"
@@ -11,7 +12,7 @@ var blogs = []*proto.Blog{
 		Id:     1,
 		Title:  "First Blog Post",
 		Text:   "This is the content of the first blog post.",
-		Author: "Author A",
+		Author: nil,
 		Date:   "2023-11-01",
 	},
 }
@@ -20,9 +21,16 @@ func ListBlogs() ([]*proto.Blog, error) {
 	return blogs, nil
 }
 
-func CreateBlog(title string, text string, author string) int {
+func CreateBlog(title string, text string, author *proto.User) (int, error) {
 	id := IdGenerator()
 	currentDate := time.Now().Local()
+
+	foundUser := slices.IndexFunc(users, func(b *proto.User) bool {
+		return b.Name == author.Name
+	})
+	if foundUser == -1 {
+		return -1, errors.New("user not found")
+	}
 
 	blogs = append(blogs, &proto.Blog{
 		Id:     int32(id),
@@ -32,7 +40,7 @@ func CreateBlog(title string, text string, author string) int {
 		Date:   currentDate.Format("2006-01-02"),
 	})
 
-	return id
+	return id, nil
 }
 
 func DeleteBlog(id int32) {

@@ -22,10 +22,13 @@ func (s BlogHandler) ListBlogs(_ context.Context, _ *proto.ListBlogsRequest) (*p
 }
 
 func (s BlogHandler) CreateBlog(_ context.Context, req *proto.CreateBlogRequest) (*proto.CreateBlogResponse, error) {
-	if req.Title == "" || req.Text == "" || req.Author == "" {
+	if req.Title == "" || req.Text == "" || req.Author == nil {
 		return nil, status.New(codes.InvalidArgument, "invalid request").Err()
 	}
-	newBlogId := service.CreateBlog(req.Title, req.Text, req.Author)
+	newBlogId, err := service.CreateBlog(req.Title, req.Text, req.Author)
+	if err != nil {
+		return nil, err
+	}
 	return &proto.CreateBlogResponse{Id: int32(newBlogId)}, nil
 }
 
