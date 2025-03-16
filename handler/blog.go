@@ -33,3 +33,13 @@ func (s BlogServer) DeleteBlog(_ context.Context, req *proto.DeleteBlogRequest) 
 	service.Delete(req.Id)
 	return &proto.DeleteBlogResponse{}, nil
 }
+
+func (s BlogServer) GetBlog(_ context.Context, req *proto.GetBlogRequest) (*proto.GetBlogResponse, error) {
+	blog := service.Get(req.Id)
+	return &proto.GetBlogResponse{Blog: blog}, nil
+}
+
+func (s BlogServer) UpdateBlog(_ context.Context, req *proto.UpdateBlogRequest) (*proto.UpdateBlogResponse, error) {
+	service.Update(req)
+	return &proto.UpdateBlogResponse{}, nil
+}

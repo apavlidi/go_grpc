@@ -5,6 +5,8 @@ service BlogService {
   rpc ListBlogs(ListBlogRequest) returns (ListBlogResponse);
   rpc CreateBlog(CreateBlogRequest) returns (CreateBlogResponse);
   rpc DeleteBlog(DeleteBlogRequest) returns (DeleteBlogResponse);
+  rpc UpdateBlog(UpdateBlogRequest) returns (UpdateBlogResponse);
+  rpc GetBlog(GetBlogRequest) returns (GetBlogResponse);
 }
 
 message ListBlogRequest{
@@ -37,5 +39,22 @@ message DeleteBlogRequest {
 }
 
 message DeleteBlogResponse{
+}
 
+message UpdateBlogRequest{
+  int32 id = 1;
+  string title = 2;
+  string text = 3;
+  string author = 4;
+}
+
+message UpdateBlogResponse{
+}
+
+message GetBlogRequest{
+  int32 id = 1;
+}
+
+message GetBlogResponse{
+  Blog blog = 1;
 }

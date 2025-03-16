@@ -46,3 +46,25 @@ func Delete(id int32) {
 
 	blogs = append(blogs[:foundIndex], blogs[foundIndex+1:]...)
 }
+
+func Get(id int32) *proto.Blog {
+	foundIndex := slices.IndexFunc(blogs, func(b *proto.Blog) bool {
+		return b.Id == id
+	})
+
+	if foundIndex == -1 {
+		return nil
+	}
+
+	return blogs[foundIndex]
+}
+
+func Update(req *proto.UpdateBlogRequest) {
+	blog := Get(req.Id)
+
+	if blog != nil {
+		blog.Title = req.Title
+		blog.Author = req.Author
+		blog.Text = req.Text
+	}
+}
